@@ -1,4 +1,4 @@
-package com.example.mymp3app;
+package com.example.mymp3app.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,9 @@ import android.provider.MediaStore;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.example.mymp3app.MusicData;
+import com.example.mymp3app.R;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -34,8 +37,7 @@ public class MusicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_music);
         Intent data = getIntent();
 
-        musicList = (ArrayList<MusicData>) data.getSerializableExtra("musicList");
-        selectedPosition = data.getIntExtra("position", 0);
+
         findViewByIdFunc();
 
         eventHandlerFunc();
@@ -63,9 +65,9 @@ public class MusicActivity extends AppCompatActivity {
                 }else{
                     mPlayer = new MediaPlayer();
                     MusicData musicData = musicList.get(selectedPosition);
-                    Uri musicUri = Uri.withAppendedPath(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, musicData.getId());
+
                     try {
-                        mPlayer.setDataSource(this, musicUri);
+
                         mPlayer.prepare();
                     } catch (IOException e) {
                         e.printStackTrace();

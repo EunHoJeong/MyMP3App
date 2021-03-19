@@ -16,11 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMP3App"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MusicActivity"></activity>
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".Activity.MusicActivity"></activity>
+        <activity android:name=".Activity.SignUpActivity" />
         <activity android:name=".TermsOfServiceActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.example.mymp3app;
+package com.example.mymp3app.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.mymp3app.R;
+import com.example.mymp3app.TermsOfServiceActivity;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -1,19 +1,21 @@
-package com.example.mymp3app;
+package com.example.mymp3app.Activity;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.mymp3app.Fragment.FragmentHome;
+import com.example.mymp3app.Fragment.FragmentMyMusic;
+import com.example.mymp3app.Fragment.FragmentSearch;
+import com.example.mymp3app.MusicData;
+import com.example.mymp3app.R;
 
 import java.util.ArrayList;
 
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvSinger, tvMusicTitle, tvHome, tvMyMusic, tvSearch;
     private ImageButton imgbtnPrev, imgbtnPlay, imgbtnNext, imgbtnList, imgbtnHome, imgbtnMyMusic, imgbtnSearch;
 
-    private ArrayList<MusicData> sdCardList = new ArrayList<MusicData>();
+    private ArrayList<MusicData> musicList = new ArrayList<MusicData>();
 
 
 
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ArrayList<MusicData> getData(){
-        return sdCardList;
+        return musicList;
     }
 
 

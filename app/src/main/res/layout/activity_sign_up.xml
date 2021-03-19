@@ -1,208 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="7dp"
-    tools:context=".SignUpActivity">
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="정보 입력"
-        android:textColor="#000000"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="아이디"/>
+    tools:context=".Activity.SignUpActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/edtSUID"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:maxLength="12"
-            android:hint="아이디"
-            android:background="@drawable/edt_gray"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"/>
-
-        <Button
-            android:id="@+id/btnOverlapCheckID"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:background="@drawable/edt_gray"
-            android:text="중복확인"/>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvCheckID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="영문 소문자와 숫자만 사용하여 5~12자의 아이디를 입력해주세요."
-        android:textColor="#D54040"/>
-
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="7dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="비밀번호"/>
+            android:layout_gravity="center"
+            android:text="정보 입력"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/edtSUPassword"
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:maxLength="20"
-            android:background="@drawable/edt_gray"
-            android:hint="비밀번호"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtSUID"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:maxLength="12"
+                android:hint="아이디"
+                android:background="@drawable/edt_gray"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btnOverlapCheckID"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@drawable/edt_gray"
+                android:text="중복확인"/>
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tvCheckPassword"
+            android:id="@+id/tvCheckID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="영문 소문자와 특수문자 1가지 이상을 조합하여 6~20자로 입력해주세요. (공백제외)"
+            android:text="영문 소문자와 숫자만 사용하여 5~12자의 아이디를 입력해주세요."
             android:textColor="#D54040"/>
 
-        <EditText
-            android:id="@+id/edtSUPWCheck"
-            android:layout_marginTop="5dp"
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비밀번호"/>
+
+            <EditText
+                android:id="@+id/edtSUPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:maxLength="20"
+                android:background="@drawable/edt_gray"
+                android:hint="비밀번호"/>
+
+            <TextView
+                android:id="@+id/tvCheckPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="영문 소문자와 특수문자 1가지 이상을 조합하여 6~20자로 입력해주세요. (공백제외)"
+                android:textColor="#D54040"/>
+
+            <EditText
+                android:id="@+id/edtSUPWCheck"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:maxLength="20"
+                android:background="@drawable/edt_gray"
+                android:hint="비밀번호 확인"/>
+
+            <TextView
+                android:id="@+id/tvCheckPasswordCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#D54040"/>
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이메일"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtSUEmailID"
+                android:layout_marginRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="이메일"
+                android:background="@drawable/edt_gray"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\@"
+                android:textSize="30sp"/>
+
+            <EditText
+                android:id="@+id/edtSUEmail"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@drawable/edt_gray"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="휴대폰 번호"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtSUPhone"
+                android:layout_marginRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:hint="휴대폰 번호 (-제외)"
+                android:background="@drawable/edt_gray"
+                android:layout_weight="2"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            />
+
+        <Button
+            android:id="@+id/btnJoin"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:maxLength="20"
-            android:background="@drawable/edt_gray"
-            android:hint="비밀번호 확인"/>
-
-        <TextView
-            android:id="@+id/tvCheckPasswordCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#D54040"/>
-
-
+            android:text="가입하기"/>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="이메일"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/edtSUEmailID"
-            android:layout_marginRight="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="이메일"
-            android:background="@drawable/edt_gray"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="\@"
-            android:textSize="30sp"/>
-
-        <EditText
-            android:id="@+id/edtSUEmail"
-            android:layout_marginLeft="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:background="@drawable/edt_gray"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="휴대폰 번호"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/edtSUPhone"
-            android:layout_marginRight="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="휴대폰 번호"
-            android:background="@drawable/edt_gray"
-            android:layout_weight="2"/>
-
-
-        <Button
-            android:id="@+id/btnSUGetCertification"
-            android:layout_marginLeft="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:background="@drawable/edt_gray"
-            android:text="인증번호 받기"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-        <EditText
-            android:id="@+id/edtSUCertification"
-            android:layout_marginRight="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:hint="인증 번호"
-            android:background="@drawable/edt_gray"
-            android:layout_weight="2"/>
-
-
-
-        <Button
-            android:id="@+id/btnSUCertification"
-            android:layout_marginLeft="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:background="@drawable/edt_gray"
-            android:text="인증하기"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnJoin"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="가입하기"/>
-
-
-</LinearLayout>
+</ScrollView>

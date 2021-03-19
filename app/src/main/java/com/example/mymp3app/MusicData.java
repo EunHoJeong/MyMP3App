@@ -7,73 +7,49 @@ import androidx.annotation.RequiresApi;
 import java.util.Objects;
 
 public class MusicData {
-    private String id;
-    private String artists;
+    private String play;
+    private String artist;
     private String title;
     private String albumArt;
     private String duration;
+    private String genre;
+    private String count;
 
-    public MusicData(String id, String artists, String title, String albumArt, String duration) {
-        this.id = id;
-        this.artists = artists;
+    public MusicData(String play, String artist, String title, String albumArt, String duration, String genre, String count) {
+        this.play = play;
+        this.artist = artist;
         this.title = title;
         this.albumArt = albumArt;
         this.duration = duration;
+        this.genre = genre;
+        this.count = count;
     }
 
-    public String getId() {
-        return id;
+    public String getPlay() {
+        return play;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getArtists() {
-        return artists;
-    }
-
-    public void setArtists(String artists) {
-        this.artists = artists;
+    public String getArtist() {
+        return artist;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getAlbumArt() {
         return albumArt;
-    }
-
-    public void setAlbumArt(String albumArt) {
-        this.albumArt = albumArt;
     }
 
     public String getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public String getGenre() {
+        return genre;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MusicData musicData = (MusicData) o;
-        return Objects.equals(id, musicData.id) &&
-                Objects.equals(albumArt, musicData.albumArt);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public int hashCode() {
-        return Objects.hash(id,albumArt);
+    public String getCount() {
+        return count;
     }
 }

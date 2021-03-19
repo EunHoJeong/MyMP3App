@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +20,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mymp3app.Activity.MusicActivity;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -84,127 +84,60 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         Log.d("Adapter", "onBindViewHolder");
+
         switch(item){
             case NEW:
-                if(viewHolder instanceof NewViewHolder) {
-                    NewViewHolder newViewHolder = (NewViewHolder) viewHolder;
-                    Bitmap albumImg = getAlbumImg(context, Integer.parseInt(musicList.get(position).getAlbumArt()), 200);
-                    try{
-                        newViewHolder.imgNewAlbumArt.setImageBitmap(albumImg);
-                        newViewHolder.tvNewTitle.setText(musicList.get(position).getTitle());
-                        newViewHolder.tvNewSinger.setText(musicList.get(position).getArtists());
-                    }catch (Exception e){
 
-                    }
+                if(viewHolder instanceof NewViewHolder) {
+                    NewViewHolder newVH = (NewViewHolder) viewHolder;
+                    musicSet(newVH.imgNewAlbumArt, newVH.tvNewTitle, newVH.tvNewSinger, position);
                 }
+
                 break;
             case RANK:
-                if(viewHolder instanceof RankViewHolder) {
-                    RankViewHolder rankViewHolder = (RankViewHolder) viewHolder;
-                    Bitmap albumImg = getAlbumImg(context, Integer.parseInt(musicList.get(position).getAlbumArt()), 50);
-                    try{
-                        rankViewHolder.imgRankAlbumArt.setImageBitmap(albumImg);
-                        rankViewHolder.tvRankTitle.setText(musicList.get(position).getTitle());
-                        rankViewHolder.tvRankSinger.setText(musicList.get(position).getArtists());
-                    }catch (Exception e){
 
-                    }
+                if(viewHolder instanceof RankViewHolder) {
+                    RankViewHolder rankVH = (RankViewHolder) viewHolder;
+                    musicSet(rankVH.imgRankAlbumArt, rankVH.tvRankTitle, rankVH.tvRankSinger, position);
                 }
+
                 break;
             case LIST_MUSIC:
+
                 if(viewHolder instanceof ListViewHolder) {
-                    ListViewHolder listViewHolder = (ListViewHolder) viewHolder;
-                    Bitmap albumImg = getAlbumImg(context, Integer.parseInt(musicList.get(position).getAlbumArt()), 50);
-                    try{
-                        listViewHolder.imgListAlbum.setImageBitmap(albumImg);
-                        listViewHolder.tvListTitle.setText(musicList.get(position).getTitle());
-                        listViewHolder.tvListSinger.setText(musicList.get(position).getArtists());
-                    }catch (Exception e){
-
-                    }
+                    ListViewHolder listVH = (ListViewHolder) viewHolder;
+                    musicSet(listVH.imgListAlbum, listVH.tvListTitle, listVH.tvListSinger, position);
                 }
                 break;
+
             case POSTER:
+
                 if(viewHolder instanceof PosterViewHolder) {
-                    PosterViewHolder posterViewHolder = (PosterViewHolder) viewHolder;
-                    Bitmap albumImg = getAlbumImg(context, Integer.parseInt(musicList.get(position).getAlbumArt()), 50);
-                    try{
-                        posterViewHolder.imgPosterAlbum.setImageBitmap(albumImg);
+                    PosterViewHolder posterVH = (PosterViewHolder) viewHolder;
 
-                    }catch (Exception e){
-
-                    }
+                    String url = musicList.get(position).getAlbumArt();
+                    ImageLoad task = new ImageLoad(url, posterVH.imgPosterAlbum);
+                    task.execute();
                 }
                 break;
+
             default:
                 Toast.makeText(context, "오류", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
 
+    //MusicData 값 주는곳
+    private void musicSet(ImageView albumArt, TextView title, TextView singer, int position) {
 
-
-
-
+        String url = musicList.get(position).getAlbumArt();
+        ImageLoad task = new ImageLoad(url, albumArt);
+        task.execute();
+        title.setText(musicList.get(position).getTitle());
+        singer.setText(musicList.get(position).getArtist());
 
     }
 
-    public Bitmap getAlbumImg(Context context, int albumArt, int imgMaxSize) {
-        Log.d("Adapter", "getAlbumImg");
-        /*컨텐트 프로바이더(Content Provider)는 앱 간의 데이터 공유를 위해 사용됨.
-        특정 앱이 다른 앱의 데이터를 직접 접근해서 사용할 수 없기 때문에
-        무조건 컨텐트 프로바이더를 통해 다른 앱의 데이터를 사용해야만 한다.
-        다른 앱의 데이터를 사용하고자 하는 앱에서는 Uri를 이용하여 컨텐트 리졸버(Content Resolver)를 통해
-        다른 앱의 컨텐트 프로바이더에게 데이터를 요청하게 되는데
-        요청받은 컨텐트 프로바이더는 Uri를 확인하고 내부에서 데이터를 꺼내어 컨텐트 리졸버에게 전달한다.
-        */
-        BitmapFactory.Options options=new BitmapFactory.Options();
-        ContentResolver contentResolver = context.getContentResolver();
-        Uri uri=Uri.parse("content://media/external/audio/albumart/"+albumArt);
-
-        if(uri != null){
-            ParcelFileDescriptor fd = null;
-            try {
-                fd = contentResolver.openFileDescriptor(uri, "r");
-
-                //메모리할당을 하지 않으면서 해당된 정보를 읽어올수 있음.
-                options.inJustDecodeBounds = true;
-                int scale = 0;
-
-                if(options.outHeight > imgMaxSize || options.outWidth > imgMaxSize){
-                    scale = (int)Math.pow(2,(int) Math.round(Math.log(imgMaxSize /
-                            (double) Math.max(options.outHeight, options.outWidth)) / Math.log(0.5)));
-                }
-
-                //비트맵을 위해서 메모리를 할당하겠다.
-                options.inJustDecodeBounds = false;
-                options.inSampleSize = scale;
-
-                Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fd.getFileDescriptor(),null,options);
-
-                if(bitmap != null){
-                    if(options.outWidth != imgMaxSize || options.outHeight != imgMaxSize){
-                        Bitmap tmp = Bitmap.createScaledBitmap(bitmap, imgMaxSize, imgMaxSize,true);
-                        bitmap.recycle();
-                        bitmap = tmp;
-                    }
-                }
-
-                return  bitmap;
-
-            } catch (FileNotFoundException e) {
-                Log.d("MusicAdapter","컨텐트 리졸버 에러발생");
-            } finally {
-                if(fd != null) {
-                    try {
-                        fd.close();
-                    } catch (IOException e) {
-
-                    }
-                }
-            }
-        }
-        return null;
-    }
 
     @Override
     public int getItemCount() {

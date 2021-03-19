@@ -1,11 +1,10 @@
-package com.example.mymp3app;
+package com.example.mymp3app.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
@@ -16,13 +15,16 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.mymp3app.R;
+import com.example.mymp3app.Request.IdCheckRequest;
+import com.example.mymp3app.Request.SignUpRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SignUpActivity extends AppCompatActivity {
-    private EditText edtSUID, edtSUPassword, edtSUPWCheck, edtSUEmailID, edtSUEmail, edtSUPhone, edtSUCertification;
-    private Button btnOverlapCheckID, btnSUGetCertification, btnSUCertification, btnJoin;
+    private EditText edtSUID, edtSUPassword, edtSUPWCheck, edtSUEmailID, edtSUEmail, edtSUPhone;
+    private Button btnOverlapCheckID, btnJoin;
     private TextView tvCheckID, tvCheckPassword, tvCheckPasswordCheck;
 
     @Override
@@ -155,11 +157,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        btnSUGetCertification.setOnClickListener(v -> {
-            String phone = edtSUPhone.getText().toString();
-
-
-        });
 
         btnJoin.setOnClickListener(v -> {
                 String id = edtSUID.getText().toString();
@@ -265,11 +262,8 @@ public class SignUpActivity extends AppCompatActivity {
         edtSUEmailID = findViewById(R.id.edtSUEmailID);
         edtSUEmail = findViewById(R.id.edtSUEmail);
         edtSUPhone = findViewById(R.id.edtSUPhone);
-        edtSUCertification = findViewById(R.id.edtSUCertification);
 
         btnOverlapCheckID = findViewById(R.id.btnOverlapCheckID);
-        btnSUGetCertification = findViewById(R.id.btnSUGetCertification);
-        btnSUCertification = findViewById(R.id.btnSUCertification);
         btnJoin = findViewById(R.id.btnJoin);
 
         tvCheckID = findViewById(R.id.tvCheckID);

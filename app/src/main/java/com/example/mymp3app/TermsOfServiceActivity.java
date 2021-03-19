@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import com.example.mymp3app.Activity.SignUpActivity;
+
 public class TermsOfServiceActivity extends AppCompatActivity {
     private CheckBox cbServiceAgree, cbPrivacyAgree;
     Button btnNextSignUp;
