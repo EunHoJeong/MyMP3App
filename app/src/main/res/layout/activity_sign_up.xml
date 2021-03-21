@@ -75,6 +75,7 @@
                 android:id="@+id/edtSUPassword"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:inputType="textPassword"
                 android:maxLength="20"
                 android:background="@drawable/edt_gray"
                 android:hint="비밀번호"/>
@@ -91,6 +92,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:inputType="textPassword"
                 android:maxLength="20"
                 android:background="@drawable/edt_gray"
                 android:hint="비밀번호 확인"/>
@@ -119,7 +121,7 @@
             <EditText
                 android:id="@+id/edtSUEmailID"
                 android:layout_marginRight="5dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="이메일"
                 android:background="@drawable/edt_gray"
@@ -134,7 +136,7 @@
             <EditText
                 android:id="@+id/edtSUEmail"
                 android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/edt_gray"
                 android:layout_weight="1"/>

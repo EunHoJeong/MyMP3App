@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#E7F3F4"
     tools:context=".Activity.MainActivity">
 
     <FrameLayout
+        android:layout_above="@+id/constraintLayout"
         android:padding="5dp"
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
     </FrameLayout>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_above="@+id/menu"
         android:padding="5dp"
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -118,6 +119,8 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/menu"
+        android:layout_alignParentBottom="true"
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -203,5 +206,166 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/poster_gradation"
+        android:visibility="invisible">
 
-</LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/imgbtnGood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/not_good"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.023" />
+
+            <TextView
+                android:id="@+id/tvPosterTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="노래제목"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/imgbtnGood"
+                app:layout_constraintEnd_toStartOf="@+id/imgbtnGood"
+                app:layout_constraintHorizontal_bias="0.608"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imgbtnGood"
+                app:layout_constraintVertical_bias="0.27" />
+
+            <TextView
+                android:id="@+id/tvPosterSinger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가수이름"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgbtnGood"
+                app:layout_constraintEnd_toStartOf="@+id/imgbtnGood"
+                app:layout_constraintHorizontal_bias="0.597"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPosterTitle"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <ImageView
+                android:id="@+id/imgPoster"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.311" />
+
+            <SeekBar
+                android:id="@+id/sbMP3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="76dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgPoster" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sbMP3"
+                app:layout_constraintVertical_bias="0.196">
+
+                <ImageButton
+                    android:id="@+id/imgbtnPosterPrev"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="80dp"
+                    android:layout_marginRight="80dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/bigprev"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imgbtnPosterPlay"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.357" />
+
+                <ImageButton
+                    android:id="@+id/imgbtnPosterPlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="85dp"
+                    android:layout_marginRight="85dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/bigplay"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imgbtnPosterNext"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageButton
+                    android:id="@+id/imgbtnPosterNext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/bignext"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.277" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvTimeIng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginEnd="341dp"
+                android:layout_marginRight="341dp"
+                android:text="00:00"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sbMP3"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/tvTimeLast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                app:layout_constraintBottom_toTopOf="@+id/constraintLayout11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.951"
+                app:layout_constraintStart_toEndOf="@+id/tvTimeIng"
+                app:layout_constraintTop_toBottomOf="@+id/sbMP3"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+</RelativeLayout>

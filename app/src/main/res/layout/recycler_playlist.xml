@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/conLayOutPlay"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="7dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ImageView
+        android:id="@+id/imgPlayAlbum"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.013"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.008"
+        android:src="@drawable/music" />
+
+    <TextView
+        android:id="@+id/tvPlayTitle"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="2dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="노래제목"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPlayAlbum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.028"
+        app:layout_constraintStart_toEndOf="@+id/imgPlayAlbum"
+        app:layout_constraintTop_toTopOf="@+id/imgPlayAlbum"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tvPlaySinger"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="3dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="가수이름"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPlayAlbum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toEndOf="@+id/imgPlayAlbum"
+        app:layout_constraintTop_toBottomOf="@+id/tvPlayTitle"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/imgbtnPlayPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/trash_can"
+        app:layout_constraintBottom_toBottomOf="@+id/imgPlayAlbum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.904"
+        app:layout_constraintStart_toEndOf="@+id/imgPlayAlbum"
+        app:layout_constraintTop_toTopOf="@+id/imgPlayAlbum"
+        app:layout_constraintVertical_bias="0.687" />
+
+    <TextView
+        android:id="@+id/tvPlayDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        app:layout_constraintBottom_toBottomOf="@+id/tvPlaySinger"
+        app:layout_constraintEnd_toStartOf="@+id/imgbtnPlayPlay"
+        app:layout_constraintHorizontal_bias="0.958"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvPlayTitle"
+        app:layout_constraintVertical_bias="0.791" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,34 +11,35 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tvNewMusic"
+            android:id="@+id/tvPop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="308dp"
-            android:layout_marginRight="308dp"
-            android:text="최신음악 > "
+            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="1dp"
+            android:text="발라드"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.022" />
+            app:layout_constraintVertical_bias="0.015" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:background="@drawable/border"
             android:id="@+id/recyclerNew"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="150dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="4dp"
             android:layout_marginRight="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/tvNewMusic"
+            app:layout_constraintEnd_toEndOf="@+id/tvPop"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/tvNewMusic"
-            app:layout_constraintTop_toBottomOf="@+id/tvNewMusic"
+            app:layout_constraintStart_toStartOf="@+id/tvPop"
+            app:layout_constraintTop_toBottomOf="@+id/tvPop"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
@@ -59,6 +61,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:background="@drawable/border"
             android:id="@+id/recyclerRank"
             app:layout_constraintEnd_toEndOf="@+id/textView"
             app:layout_constraintHorizontal_bias="0.011"
@@ -67,6 +70,50 @@
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tvRab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:text="힙합"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerNew"
+            app:layout_constraintEnd_toStartOf="@+id/tvPop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.466" />
+
+        <TextView
+            android:id="@+id/tvKPoP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가요"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerNew"
+            app:layout_constraintEnd_toStartOf="@+id/tvRab"
+            app:layout_constraintHorizontal_bias="0.937"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.578" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="장르 > "
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerNew"
+            app:layout_constraintEnd_toStartOf="@+id/tvKPoP"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.44" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
