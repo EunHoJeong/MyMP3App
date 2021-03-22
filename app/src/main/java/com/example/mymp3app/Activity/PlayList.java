@@ -33,11 +33,15 @@ import java.util.ArrayList;
 
 public class PlayList extends AppCompatActivity {
     public static final int PLAY_LIST = 3;
+
     private static RecyclerView recyclerPlayList;
     private static MusicAdapter adapter;
+
     private static ArrayList<MusicData> musicList = new ArrayList<MusicData>();
     private static ArrayList<MusicData> myPlayList = new ArrayList<MusicData>();
+
     private ArrayList<String> playList = new ArrayList<String>();
+
     private static SwipeRefreshLayout swiper;
 
 
@@ -47,7 +51,7 @@ public class PlayList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_play_list);
         Intent intent = getIntent();
 
         ActionBar actionBar = getSupportActionBar();
@@ -64,10 +68,6 @@ public class PlayList extends AppCompatActivity {
         recyclerPlayList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerPlayList.setAdapter(adapter);
 
-
-
-
-
     }
 
     public static void deleteList(int position){
@@ -75,7 +75,7 @@ public class PlayList extends AppCompatActivity {
     }
 
     public static void refresh(){
-        //adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
 

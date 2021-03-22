@@ -31,7 +31,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
     public static final int NEW = 0;
     public static final int RANK = 1;
     public static final int LIST_MUSIC = 2;
@@ -47,7 +47,7 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private int item;
 
     private MediaPlayer mp = new MediaPlayer();
-    private OnItemClickListener mListener = null;
+    private OnItemClickListener onItemClickListener = null;
 
     public MusicAdapter(Context context, ArrayList<MusicData> musicList, int item) {
         this.context = context;
@@ -59,7 +59,6 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("Adapter", "onCreateViewHolder");
         View view;
         RecyclerView.ViewHolder viewHolder = null;
         switch (viewType){
@@ -88,13 +87,11 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        Log.d("Adapter", "getItemViewType");
         return item;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        Log.d("Adapter", "onBindViewHolder");
 
 
         switch(item){
@@ -158,7 +155,6 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        Log.d("Adapter", "getItemCount");
         return (musicList != null) ? musicList.size() : 0;
     }
 
@@ -172,7 +168,6 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         public NewViewHolder(@NonNull View itemView) {
             super(itemView);
-            Log.d("Adapter", "NewViewHolder");
 
             imgNewAlbumArt = itemView.findViewById(R.id.imgNewAlbumArt);
             tvNewTitle = itemView.findViewById(R.id.tvNewTitle);
@@ -235,14 +230,12 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             imgbtnListPlay.setOnClickListener(v -> {
                 musicCount(getAdapterPosition());
-                Toast.makeText(context, getAdapterPosition()+"", Toast.LENGTH_SHORT).show();
                 insertPlayListRequest(musicList.get(getAdapterPosition()).getTitle(), getAdapterPosition());
                 MainActivity.setInformation(musicList.get(getAdapterPosition()).getTitle());
             });
 
-            imgListAlbum.setOnClickListener(v -> {
 
-            });
+
         }
     }
 
@@ -259,7 +252,10 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             tvPlaySinger = itemView.findViewById(R.id.tvPlaySinger);
             tvPlayDuration = itemView.findViewById(R.id.tvPlayDuration);
 
+
+
             imgbtnPlayPlay.setOnClickListener(v -> {
+
                 deletePlayListRequest(musicList.get(getAdapterPosition()).getTitle(), getAdapterPosition());
                 MainActivity.deleteList(getAdapterPosition());
                 PlayList.deleteList(getAdapterPosition());
@@ -269,18 +265,23 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
 
 
+
+
         }
     }
 
 
+    @Override
+    public void onClick(View v) {
 
+    }
     public interface OnItemClickListener{
         void onItemClick(View view, int position);
     }
 
 
     public void setOnItemClickListener(OnItemClickListener listener){
-        this.mListener = listener;
+        this.onItemClickListener = listener;
     }
 
 

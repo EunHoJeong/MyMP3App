@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mymp3app.Activity.MainActivity;
 import com.example.mymp3app.MusicAdapter;
 import com.example.mymp3app.Data.MusicData;
 import com.example.mymp3app.R;
@@ -22,6 +23,8 @@ public class FragmentMyMusic extends Fragment {
     private RecyclerView recyclerGood;
     private MusicAdapter adapter;
     private ArrayList<MusicData> musicList = new ArrayList<MusicData>();
+
+
 
     @Nullable
     @Override
@@ -36,6 +39,8 @@ public class FragmentMyMusic extends Fragment {
         adapter = new MusicAdapter(getActivity(), musicList, LIST_MUSIC);
         recyclerGood.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerGood.setAdapter(adapter);
+
+
 
         return view;
     }

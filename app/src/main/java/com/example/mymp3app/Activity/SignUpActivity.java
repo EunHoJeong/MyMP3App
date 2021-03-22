@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
@@ -159,16 +160,31 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         btnJoin.setOnClickListener(v -> {
+
                 String id = edtSUID.getText().toString();
                 String password = edtSUPassword.getText().toString();
                 String email = edtSUEmailID.getText().toString() + "@" + edtSUEmail.getText().toString();
                 String phone = edtSUPhone.getText().toString();
 
-                Response.Listener<String> responseListener = insertListener();
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject((response));
+                            boolean success = jsonObject.getBoolean("success");
 
-                SignUpRequest registerRequest = new SignUpRequest(id,password,email,phone, responseListener);
+                            if(success){
+                                Toast.makeText(getApplicationContext(),"회원등록성공",Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };//end of Response
+
+                SignUpRequest signUpRequest = new SignUpRequest(id,password,email,phone, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(SignUpActivity.this);
-                queue.add(registerRequest);
+                queue.add(signUpRequest);
 
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
@@ -177,23 +193,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     }//end of event
 
-    private Response.Listener<String> insertListener() {
-        return new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject((response));
-                    boolean success = jsonObject.getBoolean("success");
 
-                    if(success){
-                        Toast.makeText(getApplicationContext(),"회원등록성공",Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };//end of Response
-    }
 
     private boolean checkPassword(String password) {
         boolean flag = false;

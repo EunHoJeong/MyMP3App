@@ -10,18 +10,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,10 +33,7 @@ import com.example.mymp3app.Request.CountRequest;
 import com.example.mymp3app.Request.DeleteRequest;
 import com.example.mymp3app.Request.InsertPositionRequest;
 import com.example.mymp3app.Request.InsertRequest;
-import com.example.mymp3app.Request.MusicDataRequest;
-import com.example.mymp3app.Request.SelectRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,38 +43,44 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static ImageButton imgbtnGood, imgbtnPosterPrev, imgbtnPosterPlay, imgbtnPosterNext;
-    private static TextView tvPosterTitle, tvPosterSinger, tvTimeIng, tvTimeLast;
-    private static SeekBar sbMP3;
-    private static ImageView imgPoster;
-
-    private static ImageView imgMusicIcon;
-    private static TextView tvSinger, tvMusicTitle, tvHome, tvMyMusic, tvSearch;
-    private static ImageButton imgbtnPrev, imgbtnPlay, imgbtnNext, imgbtnList, imgbtnHome, imgbtnMyMusic, imgbtnSearch;
-    private static DrawerLayout drawerLayout;
-    public  static String id;
-    private static ArrayList<MusicData> musicList = new ArrayList<MusicData>();
-    private static ArrayList<MusicData> myMusicList = new ArrayList<MusicData>();
-    private static ArrayList<MusicData> myPlayList = new ArrayList<MusicData>();
-    private ArrayList<MusicData> topMusicList = new ArrayList<MusicData>();
-
-    private static MediaPlayer mp = new MediaPlayer();
-    private static int playPosition;
-
-    private static long backKeyPressedTime = 0;
-    private boolean good = false;
     private static final int PLAY = 0;
     private static final int PASUE = 1;
     private static final int REPLAY = 2;
+    private static final int ONE = 2;
+    private static final int ALL = 0;
+    private static final int NO = 1;
+    //메인
+    private static ImageButton imgbtnGood, imgbtnPosterPrev, imgbtnPosterPlay, imgbtnPosterNext;
+    private static ImageView imgPoster;
+    private static TextView tvPosterTitle, tvPosterSinger, tvTimeIng, tvTimeLast;
+    private static SeekBar sbMP3;
+    //포스터
+    private static ImageButton imgbtnPrev, imgbtnPlay, imgbtnNext, imgbtnList, imgbtnHome, imgbtnMyMusic, imgbtnSearch, imgbtnShuffle, imgbtnLoop;
+    private static ImageView imgMusicIcon;
+    private static TextView tvSinger, tvMusicTitle, tvHome, tvMyMusic, tvSearch;
+    private static DrawerLayout drawerLayout;
+
+    private static ArrayList<MusicData> musicList = new ArrayList<MusicData>();
+    private static ArrayList<MusicData> myMusicList = new ArrayList<MusicData>();
+    private static ArrayList<MusicData> myPlayList = new ArrayList<MusicData>();
+
+    private static SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+
+    private static MediaPlayer mp = new MediaPlayer();
 
     private static boolean exit = false;
     private static boolean start = false;
     private static boolean flag = false;
+    public  static String id;
+    private static long backKeyPressedTime = 0;
+    private static int playPosition;
+    private static String title;
+    private static int position;
 
-    private static SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
-
-
-
+    private boolean good = false;
+    private boolean shuffle = false;
+    private boolean reStart = false;
+    private int loop = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,39 +89,29 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         musicList = getIntent().getParcelableArrayListExtra("musicList");
         myMusicList = getIntent().getParcelableArrayListExtra("myMusicList");
         myPlayList = getIntent().getParcelableArrayListExtra("myPlayList");
-        topMusicList = getIntent().getParcelableArrayListExtra("myPlayList");
         int position = (getIntent().getIntExtra("position", 0));
+        playPosition = position;
+
         id = getIntent().getStringExtra("id");
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("musicList", musicList);
 
-
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
-
-
-
-        출처: https://commin.tistory.com/63 [Commin의 일상코딩]
-
-
-
-
-
-        setTitle("홈");
-
         findViewByIdFunc();
 
+        //메인 이벤트
         eventHandlerFunc();
+        //포스터 이벤트
         eventHandelerPoster();
 
         firstSet(position);
+
+        mpPlayAuto();
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment f_Home = new FragmentHome();
@@ -133,10 +120,14 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
 
+
     }
 
 
+
+
     private void firstSet(int position){
+
         try{
             new DownloadFilesTask(imgMusicIcon).execute(myPlayList.get(position).getAlbumArt());
             tvMusicTitle.setText(myPlayList.get(position).getTitle());
@@ -145,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
             mp.setDataSource(music);
             mp.prepare();
+
         }catch(NullPointerException e){
 
             new DownloadFilesTask(imgMusicIcon).execute(musicList.get(position).getAlbumArt());
@@ -166,6 +158,61 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void mpPlayAuto(){
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            @Override
+            public void onCompletion(MediaPlayer mp3) {
+                if(loop != 2 || shuffle){
+                    if(shuffle && loop != 0){
+                        playPosition = (int)(Math.random()*myPlayList.size());
+                    }else{
+                        playPosition= (playPosition +loop)%myPlayList.size();
+                    }
+
+                    try {
+                        mp3.reset();
+                        mp3.setDataSource(myPlayList.get(playPosition).getPlay());
+
+                        mp = mp3;
+
+                        mp.prepare();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    sbMP3.setProgress(0);
+
+                    mp.start();
+                    new DownloadFilesTask(imgPoster).execute(myPlayList.get(playPosition).getAlbumArt());
+                    tvPosterTitle.setText(myPlayList.get(playPosition).getTitle());
+                    tvPosterSinger.setText(myPlayList.get(playPosition).getArtist());
+                    tvTimeLast.setText(sdf.format(myPlayList.get(playPosition).getDuration()));
+                    startSeekBar();
+                }else{
+                    sbMP3.setProgress(0);
+                    tvTimeIng.setText("00:00");
+                    imgbtnPosterPlay.setBackgroundResource(R.drawable.bigplay);
+                    imgbtnPlay.setBackgroundResource(R.drawable.play_music);
+                    start = false;
+                    mp3.reset();
+                    try {
+                        mp3.setDataSource(myPlayList.get(playPosition).getPlay());
+                        mp = mp3;
+
+                        mp.prepare();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //reStart = true;
+
+                }
+
+            }
+        });
+    }
+
     private void eventHandlerFunc() {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("musicList", musicList);
@@ -176,12 +223,12 @@ public class MainActivity extends AppCompatActivity {
         tvHome.setTextColor(0xFF87CEEB);
 
 
+        // 다음 버튼
         imgbtnNext.setOnClickListener(v -> {
             imgbtnPlay.setBackgroundResource(R.drawable.pause);
             try {
                 mp.stop();
-                mp.release();
-                mp = new MediaPlayer();
+
                 if(playPosition == myPlayList.size()-1){
                     playPosition = 0;
                 }else {
@@ -193,10 +240,10 @@ public class MainActivity extends AppCompatActivity {
                 tvMusicTitle.setText(myPlayList.get(playPosition).getTitle());
                 tvSinger.setText(myPlayList.get(playPosition).getArtist());
                 String music = myPlayList.get(playPosition).getPlay();
-
                 mp.setDataSource(music);
                 mp.prepare();
                 mp.start();
+                mpPlayAuto();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -204,12 +251,11 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        //이전 버튼
         imgbtnPrev.setOnClickListener(v -> {
             imgbtnPlay.setBackgroundResource(R.drawable.pause);
             try {
                 mp.stop();
-                mp.release();
-                mp = new MediaPlayer();
                 if(playPosition == 0){
                     playPosition = myPlayList.size()-1;
                 }else {
@@ -229,7 +275,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //플레이 버튼
         imgbtnPlay.setOnClickListener(v -> {
+
             if(start){
                 mp.pause();
                 imgbtnPosterPlay.setBackgroundResource(R.drawable.bigplay);
@@ -330,29 +378,11 @@ public class MainActivity extends AppCompatActivity {
                 imgbtnPlay.setBackgroundResource(R.drawable.play_music);
                 start = false;
             }else{
-                Thread thread = new Thread(){
-                    @Override
-                    public void run() {
-                        if(mp == null) return;
-
-                        sbMP3.setMax(mp.getDuration());
-
-
-                        while(mp.isPlaying()){
-                            runOnUiThread(()->{
-                                sbMP3.setProgress(mp.getCurrentPosition());
-                                tvTimeIng.setText(sdf.format(mp.getCurrentPosition()));
-                            });
-                            SystemClock.sleep(500);
-                        }
-                        return;
-                    }
-                };
 
                 imgbtnPlay.setBackgroundResource(R.drawable.pause);
                 imgbtnPosterPlay.setBackgroundResource(R.drawable.bigpause);
                 mp.start();
-                thread.start();
+                startSeekBar();
                 start = true;
             }
         });// end of play
@@ -360,9 +390,8 @@ public class MainActivity extends AppCompatActivity {
         imgbtnPosterNext.setOnClickListener(v -> {
             imgbtnPosterPlay.setBackgroundResource(R.drawable.bigpause);
             try {
+
                 mp.stop();
-                mp.release();
-                mp = new MediaPlayer();
                 if(playPosition == myPlayList.size()-1){
                     playPosition = 0;
                 }else {
@@ -382,6 +411,9 @@ public class MainActivity extends AppCompatActivity {
                 mp.setDataSource(music);
                 mp.prepare();
                 mp.start();
+                startSeekBar();
+                mpPlayAuto();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -392,8 +424,7 @@ public class MainActivity extends AppCompatActivity {
             imgbtnPosterPlay.setBackgroundResource(R.drawable.bigpause);
             try {
                 mp.stop();
-                mp.release();
-                mp = new MediaPlayer();
+
                 if(playPosition == 0){
                     playPosition = myPlayList.size()-1;
                 }else {
@@ -413,10 +444,48 @@ public class MainActivity extends AppCompatActivity {
                 mp.setDataSource(music);
                 mp.prepare();
                 mp.start();
+                startSeekBar();
+                mpPlayAuto();
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e){
                 playPosition = myPlayList.size()-1;
+            }
+        });
+
+
+        imgbtnLoop.setOnClickListener(v -> {
+            switch(loop){
+                case ALL:
+                    imgbtnLoop.setBackgroundResource(R.drawable.loop);
+                    Toast.makeText(this, "전체재생", Toast.LENGTH_SHORT).show();
+                    loop = 1;
+                    mpPlayAuto();
+                    break;
+                case NO:
+                    imgbtnLoop.setBackgroundResource(R.drawable.un_loop);
+                    loop = 2;
+                    break;
+                case ONE:
+                    imgbtnLoop.setBackgroundResource(R.drawable.one_loop);
+                    loop = 0;
+                    Toast.makeText(this, "현재 곡 반복재생", Toast.LENGTH_SHORT).show();
+                    mpPlayAuto();
+                    break;
+            }
+        });
+
+        imgbtnShuffle.setOnClickListener(v -> {
+            if(shuffle){
+                imgbtnShuffle.setBackgroundResource(R.drawable.un_shuffle);
+                Toast.makeText(this, "순서대로 재생", Toast.LENGTH_SHORT).show();
+               shuffle = false;
+            }else{
+                imgbtnShuffle.setBackgroundResource(R.drawable.shuffle);
+                mpPlayAuto();
+                Toast.makeText(this, "랜덤 재생", Toast.LENGTH_SHORT).show();
+                shuffle = true;
             }
         });
 
@@ -443,9 +512,8 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<MusicData> getData(){
         return musicList;
     }
-    //Poster 화면에 띄움
 
-    public void openPoster(){
+    public void startSeekBar(){
         Thread thread = new Thread(){
             @Override
             public void run() {
@@ -461,11 +529,17 @@ public class MainActivity extends AppCompatActivity {
                     });
                     SystemClock.sleep(500);
                 }
-                return;
+
             }
 
         };
         thread.start();
+
+    }
+
+    //Poster 화면에 띄움
+    public void openPoster(){
+        startSeekBar();
         checkGoodMusic();
         drawerLayout.setVisibility(View.VISIBLE);
         exit = true;
@@ -494,11 +568,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
     public static void setInformation(String title){
 
         mp.stop();
-        mp.release();
-        mp = new MediaPlayer();
+
         imgbtnPlay.setBackgroundResource(R.drawable.pause);
         imgbtnPosterPlay.setBackgroundResource(R.drawable.bigpause);
         start = true;
@@ -533,12 +609,12 @@ public class MainActivity extends AppCompatActivity {
         tvSinger.setText(myPlayList.get(playPosition).getArtist());
         String music = myPlayList.get(playPosition).getPlay();
 
-        Log.d("position", "/"+playPosition);
 
         try {
             mp.setDataSource(music);
             mp.prepare();
             mp.start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -586,6 +662,8 @@ public class MainActivity extends AppCompatActivity {
         imgbtnPosterPrev = findViewById(R.id.imgbtnPosterPrev);
         imgbtnPosterPlay = findViewById(R.id.imgbtnPosterPlay);
         imgbtnPosterNext = findViewById(R.id.imgbtnPosterNext);
+        imgbtnShuffle = findViewById(R.id.imgbtnShuffle);
+        imgbtnLoop = findViewById(R.id.imgbtnLoop);
 
         tvPosterTitle = findViewById(R.id.tvPosterTitle);
         tvPosterSinger = findViewById(R.id.tvPosterSinger);
@@ -646,6 +724,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(exit){
+            new DownloadFilesTask(imgMusicIcon).execute(myPlayList.get(playPosition).getAlbumArt());
+            tvMusicTitle.setText(myPlayList.get(playPosition).getTitle());
+            tvSinger.setText(myPlayList.get(playPosition).getArtist());
+            String music = myPlayList.get(playPosition).getPlay();
             drawerLayout.setVisibility(View.INVISIBLE);
             exit = false;
         }else{
@@ -670,8 +752,10 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(setPosition);
 
+        mp.stop();
         mp.release();
     }
+
 
 
 }

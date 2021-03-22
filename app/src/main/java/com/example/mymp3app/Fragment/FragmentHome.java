@@ -30,6 +30,8 @@ public class FragmentHome extends Fragment {
     private ArrayList<MusicData> kpopList = new ArrayList<MusicData>();
     private ArrayList<MusicData> rabList = new ArrayList<MusicData>();
     private ArrayList<MusicData> popList = new ArrayList<MusicData>();
+    private ArrayList<MusicData> topMusicList = new ArrayList<MusicData>();
+
 
     boolean first = false;
 
@@ -53,15 +55,18 @@ public class FragmentHome extends Fragment {
         tvPop = view.findViewById(R.id.tvPop);
 
         estGenre();
+        getTop();
 
         eventHandlerFunc();
 
 
-
-
-
-
         return view;
+    }
+
+    private void getTop(){
+        for(int i = 0; i < 10; i++){
+            topMusicList.add(musicList.get(i));
+        }
     }
 
     private void estGenre() {
@@ -88,7 +93,7 @@ public class FragmentHome extends Fragment {
     private void eventHandlerFunc() {
         tvKPop.setTextColor(0xFF87CEEB);
         adapterNew = new MusicAdapter(getActivity(), kpopList, NEW);
-        adapterRank = new MusicAdapter(getActivity(), musicList, RANK);
+        adapterRank = new MusicAdapter(getActivity(), topMusicList, RANK);
         recyclerNew.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         recyclerRank.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerNew.setAdapter(adapterNew);

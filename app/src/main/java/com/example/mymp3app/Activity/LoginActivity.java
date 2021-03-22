@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private ArrayList<MusicData> musicList = new ArrayList<MusicData>();
     private ArrayList<MusicData> myMusicList = new ArrayList<MusicData>();
     private ArrayList<MusicData> myPlayList = new ArrayList<MusicData>();
-    private ArrayList<MusicData> topMusicList = new ArrayList<MusicData>();
+    private ArrayList<MusicData> topList = new ArrayList<MusicData>();
     private ArrayList<String> goodList = new ArrayList<String>();
     private ArrayList<String> playList = new ArrayList<String>();
 
@@ -101,11 +99,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 dataClassification();
 
+
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putParcelableArrayListExtra("musicList", musicList);
                 intent.putParcelableArrayListExtra("myMusicList", myMusicList);
                 intent.putParcelableArrayListExtra("myPlayList", myPlayList);
-                intent.putParcelableArrayListExtra("topMusicList", topMusicList);
                 intent.putExtra("position", position);
                 intent.putExtra("id", edtID.getText().toString());
                 startActivity(intent);
@@ -136,9 +134,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
 
-        for(int i = 0; i < 10; i++){
-            topMusicList.add(musicList.get(i));
-        }
+
 
 
     }
