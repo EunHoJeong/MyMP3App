@@ -240,10 +240,13 @@ public class MainActivity extends AppCompatActivity {
                 tvMusicTitle.setText(myPlayList.get(playPosition).getTitle());
                 tvSinger.setText(myPlayList.get(playPosition).getArtist());
                 String music = myPlayList.get(playPosition).getPlay();
-                mp.setDataSource(music);
+                MediaPlayer mp3 = new MediaPlayer();
+                mp3.setDataSource(music);
+                mp = mp3;
                 mp.prepare();
                 mp.start();
                 mpPlayAuto();
+
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -267,9 +270,12 @@ public class MainActivity extends AppCompatActivity {
                 tvMusicTitle.setText(myPlayList.get(playPosition).getTitle());
                 tvSinger.setText(myPlayList.get(playPosition).getArtist());
                 String music = myPlayList.get(playPosition).getPlay();
-                mp.setDataSource(music);
+                MediaPlayer mp3 = new MediaPlayer();
+                mp3.setDataSource(music);
+                mp = mp3;
                 mp.prepare();
                 mp.start();
+                mpPlayAuto();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -408,11 +414,14 @@ public class MainActivity extends AppCompatActivity {
                 new DownloadFilesTask(imgPoster).execute(myPlayList.get(p).getAlbumArt());
 
                 String music = myPlayList.get(p).getPlay();
-                mp.setDataSource(music);
+                MediaPlayer mp3 = new MediaPlayer();
+                mp3.setDataSource(music);
+                mp = mp3;
                 mp.prepare();
                 mp.start();
-                startSeekBar();
                 mpPlayAuto();
+                startSeekBar();
+
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -441,11 +450,13 @@ public class MainActivity extends AppCompatActivity {
                 new DownloadFilesTask(imgPoster).execute(myPlayList.get(p).getAlbumArt());
 
                 String music = myPlayList.get(playPosition).getPlay();
-                mp.setDataSource(music);
+                MediaPlayer mp3 = new MediaPlayer();
+                mp3.setDataSource(music);
+                mp = mp3;
                 mp.prepare();
                 mp.start();
-                startSeekBar();
                 mpPlayAuto();
+                startSeekBar();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -609,9 +620,10 @@ public class MainActivity extends AppCompatActivity {
         tvSinger.setText(myPlayList.get(playPosition).getArtist());
         String music = myPlayList.get(playPosition).getPlay();
 
-
+        MediaPlayer mp3 = new MediaPlayer();
         try {
-            mp.setDataSource(music);
+            mp3.setDataSource(music);
+            mp = mp3;
             mp.prepare();
             mp.start();
 
