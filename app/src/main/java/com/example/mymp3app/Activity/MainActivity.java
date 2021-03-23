@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean good = false;
     private boolean shuffle = false;
     private boolean reStart = false;
-    private int loop = 1;
+    private int loop = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         //포스터 이벤트
         eventHandelerPoster();
 
+        tvMusicTitle.setSelected(true);
         firstSet(position);
 
         mpPlayAuto();
@@ -689,7 +690,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void insertGoodMusic(){
         String url = "http://gh888.dothome.co.kr/InsertGood.php";
-        String title = musicList.get(playPosition).getTitle();
+        String title = myPlayList.get(playPosition).getTitle();
 
         Response.Listener<String> listener = new Response.Listener<String>() {
             @Override
@@ -736,6 +737,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(exit){
+            FragmentMyMusic.refresh();
             new DownloadFilesTask(imgMusicIcon).execute(myPlayList.get(playPosition).getAlbumArt());
             tvMusicTitle.setText(myPlayList.get(playPosition).getTitle());
             tvSinger.setText(myPlayList.get(playPosition).getArtist());

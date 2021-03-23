@@ -20,8 +20,8 @@ import java.util.ArrayList;
 
 public class FragmentMyMusic extends Fragment {
     public static final int LIST_MUSIC = 2;
+    private static MusicAdapter adapter;
     private RecyclerView recyclerGood;
-    private MusicAdapter adapter;
     private ArrayList<MusicData> musicList = new ArrayList<MusicData>();
 
 
@@ -45,5 +45,8 @@ public class FragmentMyMusic extends Fragment {
         return view;
     }
 
+    public static void refresh(){
+        adapter.notifyDataSetChanged();
+    }
 
 }
